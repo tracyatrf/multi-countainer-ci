@@ -3,12 +3,18 @@ services:
   - docker
 
 before_install: 
-  - docker build -t tracyatrf/multi-container -f ./client/Dockerfile.dev ./client
+  - docker build -t tracymeade/multi-container -f ./client/Dockerfile.dev ./client
 script:
-  - docker run tracyatrf/multi-container npm test -- --coverage
+  - docker run tracymeade/multi-container npm test -- --coverage
 
 after_success:
-  - docker build -t tracyatrf/multi-client ./client
-  - docker build -t tracyatrf/multi-server ./server
-  - docker build -t tracyatrf/multi-worker ./worker
-  - docker build -t tracyatrf/multi-nginx ./nginx
+  - docker build -t tracymeade/multi-client ./client
+  - docker build -t tracymeade/multi-server ./server
+  - docker build -t tracymeade/multi-worker ./worker
+  - docker build -t tracymeade/multi-nginx ./nginx
+
+  - echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
+  - docker push tracymeade/multi-client
+  - docker push tracymeade/multi-server
+  - docker push tracymeade/multi-worker
+  - docker push tracymeade/multi-nginx
