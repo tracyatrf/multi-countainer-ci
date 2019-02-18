@@ -18,3 +18,16 @@ after_success:
   - docker push tracymeade/multi-server
   - docker push tracymeade/multi-worker
   - docker push tracymeade/multi-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-container
+  env: MultiContainer-env
+  bucket-name: elasticbeanstalk-us-east-1-305671491589
+  bucket-path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
