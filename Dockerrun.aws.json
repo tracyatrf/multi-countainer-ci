@@ -21,10 +21,10 @@
       "image": "tracymeade/multi-nginx",
       "essential": "true",
       "memory": 128,
-      "portMappings": {
+      "portMappings": [{
         "hostPort": 80,
         "containerPort": 80
-      },
+      }],
       "links": ["client","server"]
     },
     {
